@@ -3,7 +3,6 @@ package minicraft;
 import minicraft.gfx.Renderer;
 
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
@@ -22,9 +21,10 @@ public class Window {
     public static long lastSecond = 0;
     public static int frames = 0;
     public static int ticks = 0;
-    private static int time = 0;  // Incremental time value
+    private static int time = 0;
     private static BufferedImage image = new BufferedImage(Renderer.WIDTH, Renderer.HEIGHT, BufferedImage.TYPE_INT_RGB);
     private static int[] imagePixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+    private static State state;
 
     public static void init(String title, int width, int height) {
         Window.width = width;
@@ -44,12 +44,14 @@ public class Window {
 
         canvas.createBufferStrategy(2);
         bufferStrategy = canvas.getBufferStrategy();
+
+        state = new State(width / 16, height / 16);
     }
 
     private static int[] generatePalette() {
         int[] result = new int[256];
         for (int i = 0; i < 256; i++) {
-            result[i] = Color.HSBtoRGB(i / 256f, 1, 1);
+            result[i] = java.awt.Color.HSBtoRGB(i / 256f, 1, 1);
         }
         return result;
     }
@@ -69,7 +71,7 @@ public class Window {
 
             while (delta >= 1) {
                 ticks++;
-                time++;  // Increment the time value on each tick
+                time++;
                 delta -= 1;
                 shouldRender = true;
             }
@@ -86,7 +88,6 @@ public class Window {
                 tps = ticks;
                 frames = 0;
                 ticks = 0;
-                System.out.println("FPS: " + fps + " TPS: " + tps);
             }
         }
     }
@@ -101,6 +102,9 @@ public class Window {
         Graphics g = bs.getDrawGraphics();
         System.arraycopy(Renderer.pixels, 0, imagePixels, 0, Renderer.pixels.length);
         g.drawImage(image, 0, 0, canvas.getWidth(), canvas.getHeight(), null);
+
+        state.render(g);
+
         g.dispose();
         bs.show();
     }
