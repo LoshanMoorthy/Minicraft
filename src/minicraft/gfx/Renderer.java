@@ -1,4 +1,4 @@
-package minicraft;
+package minicraft.gfx;
 
 public class Renderer {
     public static final int WIDTH = 256, HEIGHT = 144;

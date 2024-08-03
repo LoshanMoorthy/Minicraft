@@ -1,2 +1,4 @@
-package minicraft.gfx;public class Color {
+package minicraft.gfx;
+
+public class Color {
 }

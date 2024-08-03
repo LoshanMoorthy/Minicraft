@@ -1,4 +1,4 @@
-package minicraft.level.tile;
+package minicraft.level;
 
 public class Level {
 }

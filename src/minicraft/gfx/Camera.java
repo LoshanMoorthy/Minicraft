@@ -1,2 +1,4 @@
-package minicraft.gfx;public class Camera {
+package minicraft.gfx;
+
+public class Camera {
 }

@@ -1,5 +1,7 @@
 package minicraft;
 
+import minicraft.gfx.Renderer;
+
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
